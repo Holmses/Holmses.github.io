@@ -168,6 +168,10 @@ script_includes:
         {% endcapture %}
 
           {{ site.data.locales[lang].copyright.license.template | replace: ':LICENSE_NAME', _replacement }}
+        <script async src="/assets/js/dist/busuanzi.min.js"></script>
+        • 此文章阅读量：<span id="busuanzi_page_pv" style="color:#1cc088;">加载中...</span> 次
+        • 此文章访客数：<span id="busuanzi_page_uv" style="color:#1cc088;">加载中...</span> 人
+
         {% endif %}
       </div>
 
