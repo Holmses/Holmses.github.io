@@ -37,7 +37,7 @@ tags: [Jekyll,GitHub,Ruby,Gem,Bundler]
   3. 从 `.gitignore` 中删除 `Gemfile.lock` 条目 。
   4. 创建新提交以自动保存更改。
 
-- 下面介绍[本地部署](###本地部署)和 [GitHub Actions 自动部署](###GitHub Actions 自动部署)
+- 下面介绍**本地部署**和 **GitHub Actions 自动部署**
 
 ### 本地部署
 
