@@ -1,149 +1,213 @@
 ---
-title: Getting Started
+title: Jekyll GitHub Pages 自动部署博客指南(北)
 description: >-
-  Get started with Chirpy basics in this comprehensive overview.
-  You will learn how to install, configure, and use your first Chirpy-based website, as well as deploy it to a web server.
-author: cotes
-date: 2019-08-09 20:55:00 +0800
-categories: [Blogging, Tutorial]
-tags: [getting started]
-pin: true
-media_subpath: '/posts/20180809'
+  部署 Jekyll-theme-chirpy 遇到的一些问题
+date: 2025-08-19 14:57:00 +0800
+categories: [博客, 教程]
+tags: [Jekyll,GitHub,Ruby,Gem,Bundler]
 ---
 
-## Creating a Site Repository
+## 准备工作
 
-When creating your site repository, you have two options depending on your needs:
+首先介绍有两种方式部署Jekyll-theme-chirpy：
 
-### Option 1. Using the Starter (Recommended)
+1. **使用 Chirpy Starter**：这种方法简化了升级，隔离了不必要的文件，非常适合那些希望专注于以最小配置进行写入的用户。(我没有使用这种方法，不做介绍)
 
-This approach simplifies upgrades, isolates unnecessary files, and is perfect for users who want to focus on writing with minimal configuration.
+- Sign in to GitHub and navigate to the [**starter**][starter].
+- Click the <kbd>Use this template</kbd> button and then select <kbd>Create a new repository</kbd>.
+- Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
 
-1. Sign in to GitHub and navigate to the [**starter**][starter].
-2. Click the <kbd>Use this template</kbd> button and then select <kbd>Create a new repository</kbd>.
-3. Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
+2. **Forking on GitHub**：这种方法便于修改功能或UI设计，但在升级过程中会带来挑战。所以，除非你熟悉Jekyll并计划大幅修改这个主题，否则不要尝试这个。（就挑难的）
 
-### Option 2. Forking the Theme
+-  在GitHub 上 Fork [ **Chirpy**][chirpy] 代码并重命名为 `<GITHUB_USERNAME>.github.io` ,目的是为了使用GitHub Page的免费域名，如果你有别的域名当然可以使用。
 
-This approach is convenient for modifying features or UI design, but presents challenges during upgrades. So don't try this unless you are familiar with Jekyll and plan to heavily modify this theme.
+- 在本地 clone 代码然后执行
 
-1. Sign in to GitHub.
-2. [Fork the theme repository](https://github.com/cotes2020/jekyll-theme-chirpy/fork).
-3. Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
-
-## Setting up the Environment
-
-Once your repository is created, it's time to set up your development environment. There are two primary methods:
-
-### Using Dev Containers (Recommended for Windows)
-
-Dev Containers offer an isolated environment using Docker, which prevents conflicts with your system and ensures all dependencies are managed within the container.
-
-**Steps**:
-
-1. Install Docker:
-   - On Windows/macOS, install [Docker Desktop][docker-desktop].
-   - On Linux, install [Docker Engine][docker-engine].
-2. Install [VS Code][vscode] and the [Dev Containers extension][dev-containers].
-3. Clone your repository:
-   - For Docker Desktop: Start VS Code and [clone your repo in a container volume][dc-clone-in-vol].
-   - For Docker Engine: Clone your repo locally, then [open it in a container][dc-open-in-container] via VS Code.
-4. Wait for the Dev Containers setup to complete.
-
-### Setting up Natively (Recommended for Unix-like OS)
-
-For Unix-like systems, you can set up the environment natively for optimal performance, though you can also use Dev Containers as an alternative.
-
-**Steps**:
-
-1. Follow the [Jekyll installation guide](https://jekyllrb.com/docs/installation/) to install Jekyll and ensure [Git](https://git-scm.com/) is installed.
-2. Clone your repository to your local machine.
-3. If you forked the theme, install [Node.js][nodejs] and run `bash tools/init.sh` in the root directory to initialize the repository.
-4. Run command `bundle` in the root of your repository to install the dependencies.
-
-## Usage
-
-### Start the Jekyll Server
-
-To run the site locally, use the following command:
-
-```terminal
-$ bundle exec jekyll serve
-```
-
-> If you are using Dev Containers, you must run that command in the **VS Code** Terminal.
-{: .prompt-info }
-
-After a few seconds, the local server will be available at <http://127.0.0.1:4000>.
-
-### Configuration
-
-Update the variables in `_config.yml`{: .filepath} as needed. Some typical options include:
-
-- `url`
-- `avatar`
-- `timezone`
-- `lang`
-
-### Social Contact Options
-
-Social contact options are displayed at the bottom of the sidebar. You can enable or disable specific contacts in the `_data/contact.yml`{: .filepath} file.
-
-### Customizing the Stylesheet
-
-To customize the stylesheet, copy the theme's `assets/css/jekyll-theme-chirpy.scss`{: .filepath} file to the same path in your Jekyll site, and add your custom styles at the end of the file.
-
-### Customizing Static Assets
-
-Static assets configuration was introduced in version `5.1.0`. The CDN of the static assets is defined in `_data/origin/cors.yml`{: .filepath }. You can replace some of them based on the network conditions in the region where your website is published.
-
-If you prefer to self-host the static assets, refer to the [_chirpy-static-assets_](https://github.com/cotes2020/chirpy-static-assets#readme) repository.
-
-## Deployment
-
-Before deploying, check the `_config.yml`{: .filepath} file and ensure the `url` is configured correctly. If you prefer a [**project site**](https://help.github.com/en/github/working-with-github-pages/about-github-pages#types-of-github-pages-sites) and don't use a custom domain, or if you want to visit your website with a base URL on a web server other than **GitHub Pages**, remember to set the `baseurl` to your project name, starting with a slash, e.g., `/project-name`.
-
-Now you can choose _ONE_ of the following methods to deploy your Jekyll site.
-
-### Deploy Using Github Actions
-
-Prepare the following:
-
-- If you're on the GitHub Free plan, keep your site repository public.
-- If you have committed `Gemfile.lock`{: .filepath} to the repository, and your local machine is not running Linux, update the platform list of the lock file:
-
-  ```console
-  $ bundle lock --add-platform x86_64-linux
+  ```bash
+  bash tools/init.sh
   ```
 
-Next, configure the _Pages_ service:
+  >  如果不是在 GitHub Page 上部署，加上 `--no-gh`
+  {: .prompt-tip }
 
-1. Go to your repository on GitHub. Select the _Settings_ tab, then click _Pages_ in the left navigation bar. In the **Source** section (under _Build and deployment_), select [**GitHub Actions**][pages-workflow-src] from the dropdown menu.  
-   ![Build source](pages-source-light.png){: .light .border .normal w='375' h='140' }
-   ![Build source](pages-source-dark.png){: .dark .normal w='375' h='140' }
+  上述命令将会：
 
-2. Push any commits to GitHub to trigger the _Actions_ workflow. In the _Actions_ tab of your repository, you should see the workflow _Build and Deploy_ running. Once the build is complete and successful, the site will be deployed automatically.
+  1. 从存储库中删除 `_posts` 目录。
+  2. 如果使用了 `--no-gh` 选项，则将删除 `.github` 目录。否则，通过删除 `.github/workflows/pages-deploy.yml.hook` 文件的 `.hook` 扩展名来设置 GitHub Action 工作流，然后删除 `.github` 文件夹中的其他文件和目录。
+  3. 从 `.gitignore` 中删除 `Gemfile.lock` 条目 。
+  4. 创建新提交以自动保存更改。
 
-You can now visit the URL provided by GitHub to access your site.
+- 下面介绍[本地部署](###本地部署)和 [GitHub Actions 自动部署](###GitHub Actions 自动部署)
 
-### Manual Build and Deployment
+### 本地部署
 
-For self-hosted servers, you will need to build the site on your local machine and then upload the site files to the server.
+本地部署 jekyll 方便在本地调试发布博客，不用每次都使用 GitHub 部署发布。
 
-Navigate to the root of the source project, and build your site with the following command:
+#### 安装依赖项
 
-```console
-$ JEKYLL_ENV=production bundle exec jekyll b
+- [Ruby][ruby]，[Gem][gem]：安装包直接下机安装即可，里面的命令行输入选3
+
+  ```bash
+   # 检查是否安装好
+   ruby -v
+   gem -v
+  ```
+
+- Bundler,Jekyll：
+
+  ```bash
+  gem install jekyll bundler
+  # 检查是否安装好
+  jekyll -v
+  bundler -v
+  ```
+
+#### 构建并预览 Jekyll 网站
+
+在克隆的代码根目录执行
+
+```bash
+bundler install 
 ```
 
-Unless you specified the output path, the generated site files will be placed in the `_site`{: .filepath} folder of the project's root directory. Upload these files to your target server.
+安装依赖，外网太慢可以换源
 
-[nodejs]: https://nodejs.org/
+```bash
+# 添加镜像源并移除默认源
+gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
+# 列出已有源
+gem sources -l
+# 替换 bundler 默认源
+bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
+```
+
+依赖装好，可以只构建网站
+
+```bash
+bundle exec jekyll serve
+```
+
+浏览器中访问 `http://127.0.0.1:4000`
+
+### GitHub Actions 自动部署
+
+首先你需要注意项目中的 `_config.yml` 文件，这是必要的配置文件。
+
+```yaml
+lang: en # 语言使用中文 zh-CN
+timezone: Asia/Shanghai # 时区
+url: "" #'https://username.github.io'，注意不要以'/'结尾
+```
+
+如果你的本地电脑不是 Linux, 在项目根目录执行
+
+```bash
+bundle lock --add-platform x86_64-linux
+```
+
+然后在 GitHub 上的仓库中选择 Setting， 在左边导航栏找到 pages , 右边 Build and deployment 的 Source 下拉选择 GitHub Action, 每次 push 你的代码，GitHub 会自动帮你构建部署，等待完成后访问`https://username.github.io`
+
+### 升级
+
+这取决于您如何使用主题：
+
+- 如果您使用的是 gem 主题（在 `Gemfile` 中会有 `gem "jekyll-theme-chirpy"` ），则编辑 `Gemfile` 并更新 gem 主题的版本号，例如：
+
+  ```
+  - gem "jekyll-theme-chirpy", "~> 3.2", ">= 3.2.1"
+  + gem "jekyll-theme-chirpy", "~> 3.3", ">= 3.3.0"
+  ```
+
+  然后执行以下命令：
+
+  ```
+  $ bundle update jekyll-theme-chirpy
+  ```
+
+  随着版本升级，关键文件（有关详细信息，请参阅 [Startup Template](https://github.com/cotes2020/chirpy-starter) ）和配置选项将会被更改。请参阅 [Upgrade Guide](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide) ，以使您的存储库的文件与最新版本的主题保持同步。
+
+- 如果您是从源项目 fork 的（您的 `Gemfile` 中会有 `gemspec` ），则将 [最新的上游 tag](https://github.com/cotes2020/jekyll-theme-chirpy/tags) 合并到您的 Jekyll 站点中以完成升级。该合并可能会与您的本地修改冲突。请耐心且仔细地解决这些冲突。
+
+### 添加评论功能
+
+#### 引入 giscus
+
+1. 在 GitHub App 中安装 giscus, 然后给指定仓库安装 giscus
+
+2. 给仓库开启 Discussions 在仓库的 Settings 中设置
+
+3. 来到 [giscus][giscus] 官网获取配置
+
+4. 把配置导入 _config.yml
+
+   ```yaml
+   comments:
+     provider: giscus # [disqus | utterances | giscus]
+     giscus:
+       repo:                                     # GitHub 仓库，格式：<owner>/<repo>
+       repo_id:                                  # Giscus 分配的 Repo ID
+       category: Announcements                   # 评论分类名称
+       category_id:                              # Giscus 分配的 Category ID
+       mapping: pathname                         # 映射方式：pathname（默认）
+       strict: 1                                 # 严格匹配路径
+       input_position: bottom                    # 评论框位置：底部
+       lang: zh-CN                               # 语言：简体中文
+       reactions_enabled: 1                      # 启用 reactions（点赞等）
+       emit_metadata: 0                          # 不发送页面元数据
+       theme: preferred_color_scheme             # 使用系统主题或跟随网站
+       loading: lazy                             # 延迟加载
+   ```
+
+### 添加访客数量
+
+直接在文章需要的位置添加 html 代码块即可
+
+```html
+<p>本站总访问量：<span id="busuanzi_site_pv" style="color:#1cc088;">加载中...</span> 次 • 本站总访客数：<span id="busuanzi_site_uv" style="color:#1cc088;">加载中...</span> 人</p>
+```
+
+#### 安装与使用
+在HTML中引入JavaScript脚本：
+
+```js
+<script src="//api.busuanzi.cc/static/3.6.9/busuanzi.min.js" defer></script>
+```
+
+也可以下载JavaScript文件部署到自己的网站：[点击下载](https://api.busuanzi.cc/static/3.6.9/download/Busuanzi.zip)
+
+**这个前端js放在本地，很多html文件引用这个js，地址怎么配置(因为菜，所有用http)**
+
+添加不蒜子统计标签：
+
+```html
+本站总访问量：<span id="busuanzi_site_pv">加载中...</span>
+本站总访客数：<span id="busuanzi_site_uv">加载中...</span>
+本页总阅读量：<span id="busuanzi_page_pv">加载中...</span>
+本页总访客数：<span id="busuanzi_page_uv">加载中...</span>
+本站今日访问量：<span id="busuanzi_today_site_pv">加载中...</span>
+本站今日访客数：<span id="busuanzi_today_site_uv">加载中...</span>
+本页今日阅读量：<span id="busuanzi_today_page_pv">加载中...</span>
+本页今日访客数：<span id="busuanzi_today_page_uv">加载中...</span>
+```
+
+
+
+## References
+
+1. [准备开始][]
+1. [Chirpy本地部署][]
+1. [starter][]
+1. [chirpy][]
+1. [ruby][]
+1. [gem][]
+1. [giscus][]
+1. [busuanzi][]
+
+[准备开始]: https://pansong291.github.io/chirpy-demo-zhCN/posts/getting-started/#%E5%8D%87%E7%BA%A7
+[Chirpy本地部署]: https://august295.github.io/posts/Chirpy%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2/#11-windows
 [starter]: https://github.com/cotes2020/chirpy-starter
-[pages-workflow-src]: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow
-[docker-desktop]: https://www.docker.com/products/docker-desktop/
-[docker-engine]: https://docs.docker.com/engine/install/
-[vscode]: https://code.visualstudio.com/
-[dev-containers]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
-[dc-clone-in-vol]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume
-[dc-open-in-container]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-an-existing-folder-in-a-container
+[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/fork
+[ruby]: https://rubyinstaller.org/downloads/
+[gem]: https://rubygems.org/pages/download
+[giscus]: https://giscus.app/zh-CN
+[busuanzi]: https://www.busuanzi.cc/
