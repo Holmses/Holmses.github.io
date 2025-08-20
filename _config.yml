@@ -120,12 +120,12 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: Holmses/Holmses.github.io           # GitHub 仓库，格式：<owner>/<repo>
-    repo_id: R_kgDOK6UBXQ                     # Giscus 分配的 Repo ID
+    repo_id: R_kgDOPfsdDg                     # Giscus 分配的 Repo ID
     category: Announcements                   # 评论分类名称
-    category_id: DIC_kwDOK6UBXc4CuStB         # Giscus 分配的 Category ID
+    category_id: DIC_kwDOPfsdDs4CuU10         # Giscus 分配的 Category ID
     mapping: pathname                         # 映射方式：pathname（默认）
     strict: 1                                 # 严格匹配路径
-    input_position: bottom                    # 评论框位置：底部
+    input_position: top                       # 评论框位置：底部
     lang: zh-CN                               # 语言：简体中文
     reactions_enabled: 1                      # 启用 reactions（点赞等）
     emit_metadata: 0                          # 不发送页面元数据
