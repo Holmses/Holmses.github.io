@@ -2,7 +2,6 @@
 title: Typora 图片上传指南
 description: >-
   使用 Jekyll 想要一个图床的联想
-date: 2025-08-20 10:55:00 +0800
 categories: [博客, 教程]
 tags: [Jekyll, GitHub, Typora, PicGo]
 ---

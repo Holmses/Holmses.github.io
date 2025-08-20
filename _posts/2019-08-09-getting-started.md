@@ -2,7 +2,6 @@
 title: Jekyll GitHub Pages 自动部署博客指南(北)
 description: >-
   部署 Jekyll-theme-chirpy 遇到的一些问题
-date: 2025-08-19 14:57:00 +0800
 categories: [博客, 教程]
 tags: [Jekyll,GitHub,Ruby,Gem,Bundler]
 ---
