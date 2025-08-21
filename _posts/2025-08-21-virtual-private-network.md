@@ -22,7 +22,11 @@ windows 常用的代理软件是 Clash for windows，但由于作者删库跑路
 
 ### IOS
 
+有人需要再更新 #
+
 ### Android
+
+有人需要再更新 #
 
 ## Cutecloud
 
