@@ -495,7 +495,7 @@ http://<任意节点IP>:30030
 
 在 Grafana 中添加 Prometheus 作为数据源：
 
-URL：<http://prometheus.monitoring.svc.cluster.local:9090>（或通过 NodePort 访问的地址）
+URL：http://prometheus.monitoring.svc.cluster.local:9090（或通过 NodePort 访问的地址）
 点击 "Save & Test" 验证连接。
 
 **导入 Dashboard**
