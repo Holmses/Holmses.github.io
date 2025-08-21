@@ -3,7 +3,7 @@ title: Jekyll GitHub Pages 自动部署博客指南(北)
 description: >-
   部署 Jekyll-theme-chirpy 遇到的一些问题
 categories: [博客, 教程]
-tags: [Jekyll,GitHub,Ruby,Gem,Bundler]
+tags: [Jekyll, GitHub, Ruby, Gem, Bundler, Chirpy]
 ---
 
 ## 准备工作
@@ -11,32 +11,33 @@ tags: [Jekyll,GitHub,Ruby,Gem,Bundler]
 首先介绍有两种方式部署Jekyll-theme-chirpy：
 
 1. **使用 Chirpy Starter**：这种方法简化了升级，隔离了不必要的文件，非常适合那些希望专注于以最小配置进行写入的用户。(我没有使用这种方法，不做介绍)
+  - Sign in to GitHub and navigate to the [**starter**][starter].
+  - Click the <kbd>Use this template</kbd> button and then select <kbd>Create a new repository</kbd>.
+  - Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
 
-- Sign in to GitHub and navigate to the [**starter**][starter].
-- Click the <kbd>Use this template</kbd> button and then select <kbd>Create a new repository</kbd>.
-- Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
 
 2. **Forking on GitHub**：这种方法便于修改功能或UI设计，但在升级过程中会带来挑战。所以，除非你熟悉Jekyll并计划大幅修改这个主题，否则不要尝试这个。（就挑难的）
 
--  在GitHub 上 Fork [ **Chirpy**][chirpy] 代码并重命名为 `<GITHUB_USERNAME>.github.io` ,目的是为了使用GitHub Page的免费域名，如果你有别的域名当然可以使用。
+  - 在GitHub 上 Fork [ **Chirpy**][chirpy] 代码并重命名为 `<GITHUB_USERNAME>.github.io` ,目的是为了使用GitHub Page的免费域名，如果你有别的域名当然可以使用。
+  - 在本地 clone 代码然后执行
 
-- 在本地 clone 代码然后执行
+    ```bash
+    bash tools/init.sh
+    ```
 
-  ```bash
-  bash tools/init.sh
-  ```
+    > 如果不是在 GitHub Page 上部署，加上 `--no-gh`
+    {: .prompt-tip }
 
-  >  如果不是在 GitHub Page 上部署，加上 `--no-gh`
-  {: .prompt-tip }
+    上述命令将会：
 
-  上述命令将会：
+    1. 从存储库中删除 `_posts` 目录。
+    1. 如果使用了 `--no-gh` 选项，则将删除 `.github` 目录。否则，通过删除 `.github/workflows/pages-deploy.yml.hook` 文件的 `.hook` 扩展名来设置 GitHub Action 工作流，然后删除 `.github` 文件夹中的其他文件和目录。
+    1. 从 `.gitignore` 中删除 `Gemfile.lock` 条目 。
+    1. 创建新提交以自动保存更改。
 
-  1. 从存储库中删除 `_posts` 目录。
-  2. 如果使用了 `--no-gh` 选项，则将删除 `.github` 目录。否则，通过删除 `.github/workflows/pages-deploy.yml.hook` 文件的 `.hook` 扩展名来设置 GitHub Action 工作流，然后删除 `.github` 文件夹中的其他文件和目录。
-  3. 从 `.gitignore` 中删除 `Gemfile.lock` 条目 。
-  4. 创建新提交以自动保存更改。
 
-- 下面介绍**本地部署**和 **GitHub Actions 自动部署**
+
+下面介绍**本地部署**和 **GitHub Actions 自动部署**
 
 ### 本地部署
 
