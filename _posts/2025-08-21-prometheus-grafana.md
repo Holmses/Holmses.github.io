@@ -419,7 +419,7 @@ http://<任意节点IP>:30090
 
 **验证配置是否生效**
 
-访问 <http://prometheus-ip:9090/targets>，确认：
+访问 http://prometheus-ip:9090/targets ，确认：
 
 node-exporter job 显示所有节点的 node-exporter 实例为 "UP"。
 kubernetes-service-endpoints job 是否正确抓取其他 Exporter（如 kube-state-metrics）。
