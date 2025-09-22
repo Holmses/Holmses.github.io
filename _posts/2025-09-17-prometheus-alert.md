@@ -1,5 +1,5 @@
 ---
-title: prometheus-alert
+title: Prometheus-Alert
 description: >-
   prometheus 告警配置，推送飞书和钉钉
 categories: [安全&监控(Security & Monitoring), prometheus]
@@ -481,7 +481,7 @@ kubectl patch svc prometheus-alert-center -n kube-mon -p '{"spec": {"type": "Nod
 
 飞书获取指南[PrometheusAlert/doc/readme/conf-feishu.md at master · feiyu563/PrometheusAlert](https://github.com/feiyu563/PrometheusAlert/blob/master/doc/readme/conf-feishu.md)
 
-
+### Prometheus-alert 自定义模板配置
 
 浏览器访问 prometheus-alert ui界面，http://10.125.11.166:30575/，在模版管理-自定义模版中，创建两个模板一个飞书一个钉钉的。
 
@@ -489,7 +489,7 @@ kubectl patch svc prometheus-alert-center -n kube-mon -p '{"spec": {"type": "Nod
 
 ![image-20250919154105683](https://raw.githubusercontent.com/Holmses/Holmses.github.io/master/assets/img/image-20250919154105683.png)
 
-模板内容参考
+### 模板内容参考
 
 ```
 {{ range $k,$v:=.alerts }}{{if eq $v.status "resolved"}}**[查看恢复信息仪表盘]({{$v.annotations.panelURL}})**✅
@@ -507,7 +507,9 @@ kubectl patch svc prometheus-alert-center -n kube-mon -p '{"spec": {"type": "Nod
 {{ $urimsg:=""}}{{ range $key,$value:=.commonLabels }}{{$urimsg =  print $urimsg $key "%3D%22" $value "%22%2C" }}{{end}}
 ```
 
+## Grafana 配置
 
+### 联络点
 
 创建联络点选择 webhook， URL填写Prometheus-alert 模板中的路径
 
@@ -516,6 +518,32 @@ kubectl patch svc prometheus-alert-center -n kube-mon -p '{"spec": {"type": "Nod
 > ```
 
 ![image-20250919152100221](https://raw.githubusercontent.com/Holmses/Holmses.github.io/master/assets/img/image-20250919152100221.png)
+
+### 报警规则
+
+磁盘空间报警规则
+
+```
+(node_filesystem_size_bytes {mountpoint ="/"} - node_filesystem_free_bytes {mountpoint ="/"}) / node_filesystem_size_bytes {mountpoint ="/"} * 100 > 70
+```
+
+服务器在线报警规则
+
+```
+up == 0
+```
+
+服务器CPU报警规则
+
+```
+100 - (avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+```
+
+服务器内存报警规则
+
+```
+(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100) < 10
+```
 
 
 
