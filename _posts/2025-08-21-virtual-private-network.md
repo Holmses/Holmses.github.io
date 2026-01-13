@@ -4,6 +4,7 @@ description: >-
   致未曾翻墙过的朋友
 categories: [工具, 教程]
 tags: [tools]
+
 ---
 
 ## virtual-private-network(VPN)
@@ -28,6 +29,28 @@ windows 常用的代理软件是 Clash for windows，但由于作者删库跑路
 
 有人需要再更新 #
 
+### Linux
+
+没有想到是我自己先需要上了，更新一版linux的vpn，也是用的 Clash Verge 的同款内核[mihomo][mihomo]。
+
+先下载[mihomo-linux-amd64-v1.19.18.deb](https://github.com/MetaCubeX/mihomo/releases/download/v1.19.18/mihomo-linux-amd64-v1.19.18.deb)，这个好了，ubuntu的安装包然后`dpkg -i 安装包名称`，安装一下,然后把yaml文件放在`/etc/mihomo/config.yaml`
+
+```
+# 以此配置文件启动
+mihomo -d /etc/mihomo/
+# 配置本机代理
+export http_proxy="http://127.0.0.1:7890"
+export https_proxy="http://127.0.0.1:7890"
+export all_proxy="socks5://127.0.0.1:7890"
+# 测试代理
+curl -I www.google.com
+# 取消代理
+unset http_proxy https_proxy all_proxy
+
+# 停止mihomo
+sudo systemctl top mihomo
+```
+
 ## Cutecloud
 
 套餐价格
@@ -44,6 +67,8 @@ windows 常用的代理软件是 Clash for windows，但由于作者删库跑路
 
 1. [clashverge][]
 2. [cutecloud][]
+3. [mihomo][]
 
 [clashverge]:https://github.com/Clash-Verge-rev/clash-verge-rev/releases
 [cutecloud]:https://2.cutecloud.net/register?code=7SYU3S11
+[mihomo]:https://github.com/MetaCubeX/mihomo/releases/tag/v1.19.18
